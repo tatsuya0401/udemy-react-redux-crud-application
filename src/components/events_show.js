@@ -57,7 +57,12 @@ const validate = values => {
 	return errors;
 };
 
+const mapStateToProps = (state, ownProps) => {
+	const event = state.events[ownProps.match.params.id];
+	return { initialValue: event, event };
+};
+
 const mapDispatchToProps = ({ deleteEvent });
-export default connect(null, mapDispatchToProps)(
-	reduxForm({ validate, form: 'eventShowForm' })(EventsShow)
+export default connect(mapStateToProps, mapDispatchToProps)(
+	reduxForm({ validate, form: 'eventShowForm', enableReinitialize: true })(EventsShow)
 );
