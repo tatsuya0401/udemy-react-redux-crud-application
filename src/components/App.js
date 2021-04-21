@@ -17,7 +17,6 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({ value: state.count.value });
-
 const mapDispatchToProps = dispatch => ({
 	increment: () => dispatch(increment()),
 	decrement: () => dispatch(decrement())
