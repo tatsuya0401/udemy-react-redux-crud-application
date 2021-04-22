@@ -4,6 +4,8 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 
 import { postEvent } from '../actions';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextFiled from 'material-ui/TextField';
 
 class EventsNew extends Component {
 	constructor(props) {
@@ -14,10 +16,17 @@ class EventsNew extends Component {
 	renderField(field) {
 		const { input, label, type, meta: { touched, error } } = field;
 
-		return (<div>
-			<input {...input} placeholder={label} type={type}></input>
-			{touched && error && <span>{error}</span>}
-		</div>);
+		return (
+			<TextFiled
+				hintText={label}
+				floatingLabelText={label}
+				type={type}
+				errorText={touched && error}
+				{...input}
+				fullWidth={true}
+			>
+			</TextFiled>
+		);
 	}
 
 	async onSubmit(values) {
@@ -26,18 +35,16 @@ class EventsNew extends Component {
 	}
 	render() {
 		const { handleSubmit, pristine, submitting, invalid } = this.props;
+		const style = { margin: 12 };
 		return (
 			<form onSubmit={handleSubmit(this.onSubmit)}>
 				<div>
 					<Field label="Title" name="title" type="text" component={this.renderField}></Field>
 					<Field label="Body" name="body" type="text" component={this.renderField}></Field>
 				</div>
-
-				<div>
-					<input type="submit" value="Submit" disabled={pristine || submitting || invalid}></input>
-					<Link to="/">Cancel</Link>
-				</div>
-			</form>
+				<RaisedButton label="Submit" type="submit" style={style} disabled={pristine || submitting || invalid}></RaisedButton>
+				<RaisedButton label="Cancel" style={style} containerElement={<Link to="/"></Link>}></RaisedButton>
+			</form >
 		);
 	}
 }
